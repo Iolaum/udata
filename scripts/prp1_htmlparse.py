@@ -59,5 +59,6 @@ def main():
     print(dehtml(text))
 
 
+# http://stackoverflow.com/questions/419163/what-does-if-name-main-do
 if __name__ == '__main__':
     main()
