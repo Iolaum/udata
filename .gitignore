@@ -1,3 +1,9 @@
+# Manual additions
+/notes
+/dataset
+
+# # Existing Default Python options from Github: # #
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
