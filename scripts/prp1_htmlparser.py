@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# # #
+#
+# Python script to read the OCR produced HTML files and create a single text file with the scanned text.
+#
+# # # 
 
-# Original code taken [23.2.2016] from:
+
+# Original _DeHTMLParser code taken [23.2.2016] from:
 # http://stackoverflow.com/a/3987802/1904901
 # HTMLParser documentation:
 # https://docs.python.org/2/library/htmlparser.html
