@@ -20,7 +20,7 @@ from traceback import print_exc
 import pickle
 import glob # alternative file selector !!
 
-class _DeHTMLParser(HTMLParser):
+class MyHTMLParser(HTMLParser):
 	# http://stackoverflow.com/a/17260649/1904901
 	# OOP constructs ...
     def __init__(self):
@@ -33,6 +33,7 @@ class _DeHTMLParser(HTMLParser):
         if len(text) > 0:
         # re.sub(pattern, repl, string, count=0, flags=0) ... ?
             text = sub('[ \t\r\n]+', ' ', text)
+            text = sub('OCR Output', '', text)
             self.__text.append(text + ' ')
 
     def handle_starttag(self, tag, attrs):
@@ -40,17 +41,21 @@ class _DeHTMLParser(HTMLParser):
             self.__text.append('\n\n')
         elif tag == 'br':
             self.__text.append('\n')
+        elif tag == 'title':
+            return
 
     def handle_startendtag(self, tag, attrs):
         if tag == 'br':
             self.__text.append('\n\n')
+        elif tag == 'title':
+        	return
 
     def text(self):
         return ''.join(self.__text).strip()
 
 
 def dehtml(text):
-    parser = _DeHTMLParser()
+    parser = MyHTMLParser()
     #  HTMLParser.feed(data): Feed some text to the parser.
     parser.feed(text)
     parser.close()
@@ -71,19 +76,10 @@ for il in listbooks:
 	with open(il, 'r') as fl:
 		listfiles = pickle.load(fl)
 		
-	# iterate over the pages
-	breakcounter = 0
-	
+	# iterate over the pages	
 	for ip in listfiles:
-		breakcounter += 1
-	
-		if breakcounter > 13:
-			break
 		with open(ip) as inp :
 			tdata = dehtml(inp.read())
-		with open("Out" + il, "a") as tf:
+		with open("Out_" + il, "a") as tf:
 			tf.write(tdata)
-	break
-
-# it works need fix OCR Output title
 
