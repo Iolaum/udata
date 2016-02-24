@@ -32,11 +32,20 @@ for key,value in enumerate(dirs):
 # Read and Write list to a file in python - taken at 23.2.2016
 # http://stackoverflow.com/a/17225333/1904901
 
-listfile = "prp2_filelist.pickle"
+print "Unsorted!"
+for il in dirs:
+	print il
+dirs.sort()
+
+
+listfile = "prp2_dirlist.pickle"
 with open(listfile, 'wb') as f:
     pickle.dump(dirs, f)
 
 with open(listfile, 'rb') as f:
     my_list = pickle.load(f)
     
-print my_list
+print "Sorted!"
+for il in dirs:
+	print il
+
