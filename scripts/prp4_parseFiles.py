@@ -34,6 +34,7 @@ class MyHTMLParser(HTMLParser):
         # re.sub(pattern, repl, string, count=0, flags=0) ... ?
             text = sub('[ \t\r\n]+', ' ', text)
             text = sub('OCR Output', '', text)
+            text = text.lower() # convert to lowercase
             self.__text.append(text + ' ')
 
     def handle_starttag(self, tag, attrs):
@@ -45,8 +46,10 @@ class MyHTMLParser(HTMLParser):
             return
 
     def handle_startendtag(self, tag, attrs):
-        if tag == 'br':
+        if tag == 'p':
             self.__text.append('\n\n')
+        elif tag == 'br':
+            self.__text.append('\n')
         elif tag == 'title':
         	return
 
@@ -69,6 +72,7 @@ for name in glob.glob('prp3_gap*'):
 	listbooks.append(name)
 print listbooks
 
+fileprefix = "Out_"
 
 # iterate over the books
 for il in listbooks:
@@ -80,6 +84,9 @@ for il in listbooks:
 	for ip in listfiles:
 		with open(ip) as inp :
 			tdata = dehtml(inp.read())
-		with open("Out_" + il, "a") as tf:
+		with open(fileprefix + il, "a") as tf:
 			tf.write(tdata)
+	print("Saved file " + fileprefix + il)
+
+print("Parsing Finished Successfully!")
 
