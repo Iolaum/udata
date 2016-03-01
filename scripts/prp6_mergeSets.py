@@ -20,17 +20,21 @@ for name in glob.glob('Set_Out_prp3*'):
 	listbooks.append(name)
 # print listbooks
 
+with open("BoWsListNames.pickle", 'wb') as f:
+	pickle.dump(listbooks, f)
+print("Saved Book List!")
+
 bsetlist = []
 
 for book in listbooks:
 	with open(book, 'rb') as f:
-	    my_list1 = pickle.load(f)
-	    bsetlist.append(my_list1)
+		my_list1 = pickle.load(f)
+		bsetlist.append(my_list1)
     
 print("Created {0} word sets.".format(len(bsetlist)))
 
 with open("BoWsList.pickle", 'wb') as f:
-		pickle.dump(bsetlist, f)
+	pickle.dump(bsetlist, f)
 		
 print("Save Success!")
 
