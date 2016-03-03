@@ -22,46 +22,32 @@ print("Creted a numpy array of {} dimensions with {} elements!".format(dists.sha
 # 
 
 
-set1 = set()
-set2 = set()
-
-set1.add("aa")
-set1.add("ab")
-set1.add("ac")
-set1.add("ad")
-set2.add("ab")
-set2.add("ac")
-set2.add("ad")
-
 def cdist(a,b):
 	c = a & b
-	d = 10000/len(c)
-	print("Distance calculated at {}".format(d))
-	return d
+	#print("Distance calculated at {}".format(d))
+	return 10000/len(c)
 	
-
-	
-cdist(set1,set2)
-
 
 
 # read word sets
 bsetlist = []
 with open("BoWsList.pickle", 'rb') as f:
     bsetlist = pickle.load(f)
-print("Read Word Sets Successfully!")
+#print("Read Word Sets Successfully!")
 
+with open ("BoWsListNames.pickle", 'rb') as f:
+	names = pickle.load(f)
+
+print("Let's see how many unique words we have in each document:")
 
 for key1,value1 in enumerate(bsetlist):
-	print key1
+	print("In document {} we have {} words!".format(names[key1],len(value1)))
 	
 
 
 # Read File names
 
-#with open ("BoWsListNames.pickle", 'rb') as f:
-#	names = pickle.load(f)
-# print names
+
 
 
 
