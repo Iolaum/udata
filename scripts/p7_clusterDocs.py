@@ -2,34 +2,34 @@
 # -*- coding: utf-8 -*-
 
 
-# # # Compare WordSets # # #
-
-from os import listdir
-from os.path import isfile, join
-from os import walk
 import pickle
-import glob # alternative file selector
 import numpy as np
+from scipy.spatial.distance import squareform
+import scipy.cluster.hierarchy as hc
+import matplotlib.pyplot as plt
 
 
 
 
-# Read File names
+# Read Distance Matrix
 
-with open ("BoWsListNames.pickle", 'rb') as f:
-	names = pickle.load(f)
-# print names
+with open("../dataset/dists.pickle", 'rb') as f:
+	dists = pickle.load(f)
+
+# create condensed distance matrix
+ndists = squareform(dists)
 
 
-# read word sets
-bsetlist = []
-with open("BoWsList.pickle", 'rb') as f:
-    bsetlist = pickle.load(f)
-print("Read Word Sets Successfully!")
+lnks = hc.linkage(ndists, method='complete')
 
 
 
+# Plot dendrogram of hierarchical clustering !
+# Works but needs decoration ... 
 
+plt.figure()
+hc.dendrogram(lnks)
+plt.show()
 
 # work from there :
 # http://docs.scipy.org/doc/scipy/reference/cluster.hierarchy.html
@@ -37,4 +37,7 @@ print("Read Word Sets Successfully!")
 
 # Need condensed distance matrix
 # http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.squareform.html
+
+# Additional resources for future reference:
+# https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/
 
