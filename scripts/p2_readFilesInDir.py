@@ -14,13 +14,16 @@ import pickle
 # Read and Write list to a file in python - taken at 23.2.2016
 # http://stackoverflow.com/a/17225333/1904901
 
-listfile = "prp2_dirlist.pickle"
+listfile = "../dataset/prp2_dirlist.pickle"
 
 
 with open(listfile, 'rb') as f:
     my_list = pickle.load(f)
     
 print my_list
+
+# # SOS # #
+# Need check if paths work properly after refactoring !!
 
 
 for il in my_list:

@@ -38,7 +38,7 @@ for il in dirs:
 dirs.sort()
 
 
-listfile = "prp2_dirlist.pickle"
+listfile = "../dataset/prp2_dirlist.pickle"
 with open(listfile, 'wb') as f:
     pickle.dump(dirs, f)
 
