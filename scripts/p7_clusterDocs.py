@@ -21,14 +21,19 @@ with open("../dataset/dists.pickle", 'rb') as f:
 # create condensed distance matrix
 ndists = squareform(dists)
 
-lnks = hc.linkage(ndists, method='complete')
+lnks = hc.linkage(ndists, method='weighted')
 
 
 # Plot dendrogram of hierarchical clustering !
 # Works but needs decoration ... 
 
+
+with open("../dataset/BoWsListNames3.pickle", 'rb') as f:
+	names1 = pickle.load(f)
+
 plt.figure()
-hc.dendrogram(lnks)
+hc.dendrogram(lnks, labels=names1, orientation="right")
+plt.tight_layout()
 plt.show()
 
 
@@ -36,5 +41,4 @@ plt.show()
 # Additional resources for future reference:
 # https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/
 
-# http://scikit-learn.org/stable/auto_examples/manifold/plot_mds.html
 

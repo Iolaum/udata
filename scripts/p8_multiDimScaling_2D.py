@@ -17,13 +17,18 @@ with open("../dataset/dists.pickle", 'rb') as f:
 	dists = pickle.load(f)
 
 # read document names
-with open ("../dataset/BoWsListNames.pickle", 'rb') as f:
-	names = pickle.load(f)
+with open("../dataset/BoWsListNames3.pickle", 'rb') as f:
+	names1 = pickle.load(f)
 # replaced with range(24) for better displaying options.
 
 
 
-mds = manifold.MDS(n_components=2, dissimilarity="precomputed", random_state=8) #2, 8
+mds = manifold.MDS(n_components=2, dissimilarity="precomputed", random_state=2) 
+#2, 8
+# results from 2 are closer to dendrogram
+# but ...
+# for all? ...
+
 results = mds.fit(dists)
 
 
@@ -33,7 +38,7 @@ plt.subplots_adjust(bottom = 0.1)
 plt.scatter(
     coords[:, 0], coords[:, 1], marker = 'o'
     )
-for label, x, y in zip(range(24), coords[:, 0], coords[:, 1]):
+for label, x, y in zip(names1, coords[:, 0], coords[:, 1]):
     plt.annotate(
         label,
         xy = (x, y), xytext = (-20, 20),
