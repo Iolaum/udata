@@ -32,7 +32,7 @@ with open("../dataset/BoWsListNames3.pickle", 'rb') as f:
 	names1 = pickle.load(f)
 
 plt.figure()
-hc.dendrogram(lnks, labels=names1, orientation="right")
+hc.dendrogram(lnks, labels=names1, orientation="right", color_threshold=2.05)
 plt.tight_layout()
 plt.show()
 
