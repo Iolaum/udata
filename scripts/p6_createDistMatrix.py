@@ -25,8 +25,9 @@ print("Creted a numpy array of {} dimensions with {} elements!".format(dists.sha
 # takes sets of unique document words as inputs
 def cdist(a,b):
 	c = a & b
+	d = (len(a) + len(b))/2
 	#print("Distance calculated at {}".format(d))
-	return 10000/len(c)
+	return d/len(c)
 	
 
 

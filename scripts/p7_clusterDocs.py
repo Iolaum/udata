@@ -33,7 +33,7 @@ with open("../dataset/BoWsListNames3.pickle", 'rb') as f:
 
 plt.figure()
 plt.title("Bag of Words Hierarchical Clustering")
-hc.dendrogram(lnks, labels=names1, orientation="right", color_threshold=2.05)
+hc.dendrogram(lnks, labels=names1, orientation="right", color_threshold=2.17)
 plt.tight_layout()
 
 plt.show()
