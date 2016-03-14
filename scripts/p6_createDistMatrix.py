@@ -28,7 +28,6 @@ def cdist(a,b):
 	d = (len(a) + len(b))/2
 	#print("Distance calculated at {}".format(d))
 	return d/len(c)
-	
 
 
 # read word sets
@@ -36,6 +35,11 @@ bsetlist = []
 with open("../dataset/BoWsList.pickle", 'rb') as f:
     bsetlist = pickle.load(f)
 #print("Read Word Sets Successfully!")
+
+
+# prints unique word count.
+# for i in bsetlist:
+# 	print len(i)
 
 # read document names
 with open ("../dataset/BoWsListNames.pickle", 'rb') as f:
@@ -68,4 +72,5 @@ print("Distance Matrix Saved Successfully!")
 
 # Need condensed distance matrix
 # http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.squareform.html
+
 
