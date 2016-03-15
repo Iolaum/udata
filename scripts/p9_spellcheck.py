@@ -8,7 +8,6 @@
 # First Simple Implementation!
 
 
-
 # Spell Checking taken at 14.3.2016:
 # http://norvig.com/spell-correct.html // A
 # defaultdict: lamda 1:
@@ -19,13 +18,13 @@
 # https://github.com/dwyl/english-words
 
 
-
 from re import sub # re = regular expression
 import pickle
-import glob # alternative file selector !!
+# import glob # alternative file finder/selector !!
 import re, string; # to remove non alphaneumerical characters from line.
-import pickle
 import collections # for spell checking
+import time # to show loop progress
+import sys  # -//-
 
 
 # Remove all non alphaneumerical characters from string
@@ -38,49 +37,9 @@ pattern = re.compile('[\W_]+')
 # http://blog.dominodatalab.com/simple-parallelization/
 
 
-
-
-
-'''
-## 
-#
-# takes as input the documents Out_prp3*
-#
-listbooks = []
-for name in glob.glob('../dataset/Out_prp3*'):
-	listbooks.append(name)
-print listbooks
-
-
-
-# iterate over the books
-for il in listbooks:
-	wordslist = []
-	with open(il, 'r') as fl:
-		for line in fl.readlines():
-			words = line.split()
-			for word in words:
-				# remove non alphaneumerical characters
-				word = pattern.sub('', word)
-				wordslist.(word)
-			#print(line)
-			#debug
-			#break
-	with open("Set_" + il, 'wb') as f:
-		pickle.dump(wordslist, f)
-	print("Saved wordset Set_" + il)
-	# debug
-	#break	
-
-print("Wordsets Successfully Created!!")
-'''
-
-
-
 ###
 ###
 ###
-
 
 # splits string to list of words:
 def words(text): return re.findall('[a-z]+', text.lower()) 
@@ -123,7 +82,7 @@ def correct(word):
 ###
 ###
 
-print(correct('Thrace'))
+#print(correct('Thrace'))
 # shrape
 # Need to take into account names !
 
@@ -134,18 +93,42 @@ print(correct('Thrace'))
 with open("../dataset/Out_prp3_gap_aLcWAAAAQAAJ.txt", 'rb') as f:
 	lines = f.readlines()
 
-ctr=0
+# dictionary of error words
+erwords = collections.defaultdict(lambda: 0)
+
+
+# Show time progress in console!
+# http://stackoverflow.com/a/3173338 // taken at 15.3.2016
+
+fulltime = len(lines)
+ctr = 0
+
+print("Starting first spell check run...")
 for line in lines:
 	dwords = line.rstrip('\n').split()
 	for dword in dwords:
 		# remove non alphaneumerical characters
 		dword = pattern.sub('', dword).strip()
-		if len(dword) > 0 and ( not dword.isdigit() ) :
-			print('Initial word is {}'.format(dword))
-			print('Corrected word is {}'.format(correct(dword)))
-	ctr += 1
-	if ctr == 10:
-		break
+		# spell check if appropriate
+		if len(dword) > 0 and (not dword.isdigit()):
+			cword = correct(dword)
+			if cword is not dword:
+				erwords[dword] += 1
+	# prints percentage of loop progress on console
+	ctr += 100
+	per = ctr/fulltime
+	sys.stdout.write("\r%d%%" % per)
+	sys.stdout.flush()
+    #break
+
+
+
+terr = 0
+nerr = 0
+for key in wewords:
+	terr += erwords[key]
+	if erwords[key] > 5:
+		nerr +=1
 	
-
-
+print("Total Number of True  Errors found: {}".format(terr))
+print("Total Number of False Errors found: {}".format(terr))
