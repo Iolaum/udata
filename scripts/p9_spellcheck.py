@@ -92,10 +92,12 @@ def train(features):
         model[f] += 1
     return model
 
-NWORDS = train(words(file('words.txt').read()))
+with open ('../dataset/words.txt', 'rb') as f:
+	NWORDS = train(words(f.read()))
+
 
 print("Read words.txt successfuly!")
-#print NWORDS['fart']
+
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -122,15 +124,28 @@ def correct(word):
 ###
 
 print(correct('Thrace'))
-
+# shrape
+# Need to take into account names !
 
 # word list
 # https://github.com/dwyl/english-words
-'''
+
 
 with open("../dataset/Out_prp3_gap_aLcWAAAAQAAJ.txt", 'rb') as f:
-#with open("gay.txt", 'rb') as f:
-	doc = f.read()
+	lines = f.readlines()
+
+ctr=0
+for line in lines:
+	dwords = line.rstrip('\n').split()
+	for dword in dwords:
+		# remove non alphaneumerical characters
+		dword = pattern.sub('', dword).strip()
+		if len(dword) > 0 and ( not dword.isdigit() ) :
+			print('Initial word is {}'.format(dword))
+			print('Corrected word is {}'.format(correct(dword)))
+	ctr += 1
+	if ctr == 10:
+		break
 	
-'''
+
 
