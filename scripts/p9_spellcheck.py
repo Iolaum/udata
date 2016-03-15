@@ -25,15 +25,17 @@ import string   # to remove non alphaneumerical characters from line.
 import collections  # for spell checking
 import time  # to show loop progress
 import sys   # -//-
+import os.path  # check if file is there
 
 
-# Remove all non alphaneumerical characters from string
-# http://stackoverflow.com/a/1277047/1904901
-# taken at 29.2.2016
-pattern = re.compile('[\W_]+')
+# Function that checks if book has already been proccessed
+def isProsd(filename):
+    return os.path.isfile(filename)
+
 
 # splits string to list of words:
 def words(text): return re.findall('[a-z]+', text.lower())
+
 
 # creates dictionary,
 # initializes first value as 1 and adds more for identical words !
@@ -54,6 +56,7 @@ print("Successfuly created Spell Check dictionary")
 
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
+
 
 def edits1(word):
     splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
@@ -83,6 +86,12 @@ for name in glob.glob('../dataset/Out_prp3*'):
 print("Created list of books to perform first spell check.")
 
 
+# Remove all non alphaneumerical characters from string
+# http://stackoverflow.com/a/1277047/1904901
+# taken at 29.2.2016
+pattern = re.compile('[\W_]+')
+
+
 namepatt = re.compile('../dataset/Out_prp3_')
 namepatt2 = '../dataset/Out_p9a_'
 endpatt1 = re.compile('.txt')
@@ -91,6 +100,17 @@ endpatt2 = '.p'
 
 bookctr = 1
 for book in listbooks:
+    fbook = namepatt.sub(namepatt2, book)
+    fbook = endpatt1.sub(endpatt2, fbook)
+    bne = len(fbook) - 2
+    # check if book has already been processed.
+    if (isProsd(fbook)):
+        print("Book {} has already been processed!".format(fbook[19:bne]))
+        bookctr += 1
+        continue
+    else:
+    	print("Book {} has not been processed!".format(fbook[19:bne]))
+
     with open(book, 'rb') as f:
         lines = f.readlines()
 
@@ -106,7 +126,7 @@ for book in listbooks:
     fulltime = len(lines)
     ctr = 0
 
-    print("Starting first spell check run on book {}/24...".format(bookctr))
+    # print("Starting first spell check run on book {}/24...".format(bookctr))
 
     for line in lines:
         dwords = line.rstrip('\n').split()
@@ -135,12 +155,10 @@ for book in listbooks:
     print("\nTotal Number of True  Errors found on book {}/24: {}.".format(bookctr, terr))
     print("Total Number of False Errors found on book {}/24: {}".format(bookctr, nerr))
 
-    book = namepatt.sub(namepatt2, book)
-    book = endpatt1.sub(endpatt2, book)
-    with open(book, 'wb') as f:
+    with open(fbook, 'wb') as f:
         pickle.dump(erwords, f)
 
-    bne = len(book) - 2
-    print("Book {} Successfully processed!".format(book[18:bne]))
+    
+    print("Book {} Successfully processed!".format(fbook[19:bne]))
     bookctr += 1
 
