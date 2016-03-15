@@ -79,8 +79,7 @@ def known(words): return set(w for w in words if w in NWORDS)
 
 
 def correct(word):
-    candidates =
-    known([word]) or known(edits1(word)) or known_edits2(word) or [word]
+    candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]
     return max(candidates, key=NWORDS.get)
 
 
@@ -92,7 +91,7 @@ def correct(word):
 # https://github.com/dwyl/english-words
 
 
-with open("../dataset/Out_prp3_gap_aLcWAAAAQAAJ.txt", 'rb') as f:
+with open("../dataset/Out_prp3_gap_2X5KAAAAYAAJ.txt", 'rb') as f:
     lines = f.readlines()
 
 # # dictionary of error words
@@ -127,15 +126,15 @@ for line in lines:
 
 terr = 0
 nerr = 0
-for key in wewords:
+for key in erwords:
     terr += erwords[key]
     if erwords[key] > 5:
         nerr += 1
 
-print("Total Number of True  Errors found: {}".format(terr))
-print("Total Number of False Errors found: {}".format(terr))
+print("\nTotal Number of True  Errors found: {}".format(terr))
+print("Total Number of False Errors found: {}".format(nerr))
 
 
-with open("../dataset/Out_p9a_gap_aLcWAAAAQAAJ.p", 'rb') as f:
+with open("../dataset/Out_p9a_gap_2X5KAAAAYAAJ.p", 'wb') as f:
     pickle.dump(erwords, f)
 
