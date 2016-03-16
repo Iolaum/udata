@@ -1,6 +1,8 @@
 # Manual additions
 /notes
 /dataset
+/scripts/tr*
+/scripts/*.txt
 
 # # Existing Default Python options from Github: # #
 
