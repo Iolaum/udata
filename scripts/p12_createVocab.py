@@ -89,9 +89,9 @@ def tokenize_only(book):
         for word in nltk.tokenize.word_tokenize(line):
             # add words(n) or numbers more than two characters
             if re.search('[a-z]', word) and len(word)>2:
-                tokens.append(stemmer.stem(word))
+                tokens.append(word)
             elif re.search('[0-9^a-z]', word) and len(word)>2:
-                tokens.append(stemmer.stem(word))
+                tokens.append(word)
         # prints percentage of loop progress on console
         ctr += 100
         per = ctr/fulltime
