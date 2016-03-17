@@ -49,10 +49,10 @@ plt.tick_params(\
     which='both',      # both major and minor ticks are affected
     bottom='on',      # ticks along the bottom edge are off
     top='off',         # ticks along the top edge are off
-    labelbottom='on')
+    labelbottom='off')
 
 
 #plt.tight_layout() #show plot with tight layout
-plt.title("Hierarchical Clustering")
+#plt.title("Hierarchical Clustering")
 plt.show()
 plt.close()

@@ -10,6 +10,7 @@ from scipy.spatial.distance import squareform
 import scipy.cluster.hierarchy as hc
 # http://docs.scipy.org/doc/scipy/reference/cluster.hierarchy.html
 import matplotlib.pyplot as plt
+import matplotlib
 
 
 
@@ -21,7 +22,7 @@ with open("../dataset/dists.pickle", 'rb') as f:
 # create condensed distance matrix
 ndists = squareform(dists)
 
-lnks = hc.linkage(ndists, method='weighted')
+lnks = hc.linkage(ndists, method='average')
 
 
 # Plot dendrogram of hierarchical clustering !
@@ -30,11 +31,25 @@ lnks = hc.linkage(ndists, method='weighted')
 
 with open("../dataset/BoWsListNames3.pickle", 'rb') as f:
 	names1 = pickle.load(f)
+	
+font = {'family' : 'Arial',
+        'size'   : 19}
+
+matplotlib.rc('font', **font)
+
 
 plt.figure()
-plt.title("Bag of Words Hierarchical Clustering")
+#plt.title("Bag of Words Hierarchical Clustering")
 hc.dendrogram(lnks, labels=names1, orientation="right", color_threshold=2.17)
-plt.tight_layout()
+
+plt.tick_params(\
+    axis= 'x',          # changes apply to the x-axis
+    which='both',      # both major and minor ticks are affected
+    bottom='on',      # ticks along the bottom edge are off
+    top='off',         # ticks along the top edge are off
+    labelbottom='off')
+    
+#plt.tight_layout()
 
 plt.show()
 

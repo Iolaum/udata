@@ -55,19 +55,19 @@ with open('../dataset/Out_p12_vocab_dataframe.p', 'rb') as f:
 	vocab_frame = p.load(f)
 
 
-print(vocab_frame.describe)
-print("Top grams per cluster:")
-print()
+# print(vocab_frame.describe)
+print("Top grams per cluster:\n")
+#print()
 #sort cluster centers by proximity to centroid
 order_centroids = km.cluster_centers_.argsort()[:, ::-1] 
 
 for i in range(num_clusters):
     print("Cluster %d words:" % i, end='')
     
-    for ind in order_centroids[i, :20]: #replace 6 with n words per cluster
+    for ind in order_centroids[i, :10]: #replace 6 with n words per cluster
         print(' %s' % vocab_frame.ix[terms[ind].split(' ')].values.tolist()[0][0].encode('utf-8', 'ignore'), end=',')
-    print() #add whitespace
-    print() #add whitespace
+    print(' \n') #add whitespace
+    #print() #add whitespace
     
     '''
     print("Cluster %d titles:" % i, end='')
@@ -76,9 +76,7 @@ for i in range(num_clusters):
     print() #add whitespace
     print() #add whitespace
     '''
-    
-print()
-print()
+
 
 # Specifying random_state so the plot is reproducible.
 mds = MDS(n_components=2, dissimilarity="precomputed", random_state=1)
@@ -95,6 +93,12 @@ df = pd.DataFrame(dict(x=xs, y=ys, label=clusters, title=names1))
 
 #group by cluster
 groups = df.groupby('label')
+
+font = {'family' : 'Normal',
+        'size'   : 18}
+
+mpl.rc('font', **font)
+
 
 
 # set up plot
