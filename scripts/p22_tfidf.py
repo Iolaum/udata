@@ -13,10 +13,6 @@ import numpy as np
 import pandas as pd
 import nltk
 import re
-# import os
-# import codecs
-# from sklearn import feature_extraction
-# import mpld3
 import glob  # alternative file finder/selector !!
 import sys
 import pickle as p
@@ -35,17 +31,6 @@ stopwords = nltk.corpus.stopwords.words('english')
 # load nltk's SnowballStemmer as variabled 'stemmer'
 stemmer = nltk.stem.snowball.SnowballStemmer("english")
 
-
-# # Tokenization:
-# http://www.nltk.org/api/nltk.tokenize.html#module-nltk.tokenize
-# Info taken at 16.3.2016
-
-#>>> from nltk.tokenize import word_tokenize
-#>>> s = '''Good muffins cost $3.88\nin New York.  Please buy me
-#... two of them.\n\nThanks.'''
-#>>> word_tokenize(s)
-#['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.',
-#'Please', 'buy', 'me', 'two', 'of', 'them', '.', 'Thanks', '.']
 
 
 # Define a tokenizer and stemmer which returns the set of stems in the text that it is passed
@@ -80,16 +65,21 @@ def tokenize_and_stem(book):
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 #define vectorizer parameters
-tfidf_vectorizer = TfidfVectorizer(max_df=0.9, max_features=50000,
-                                 min_df=0.2, stop_words='english',
-                                 use_idf=True, tokenizer=tokenize_and_stem, ngram_range=(1, 1))
+tfidf_vectorizer = TfidfVectorizer(max_df=0.75, max_features=30000,
+                                 min_df=0.25, stop_words='english',
+                                 use_idf=True, tokenizer=tokenize_and_stem, ngram_range=(1, 2))
 
 tfidf_matrix = tfidf_vectorizer.fit_transform(listbooks)  # fit the vectorizer to synopses
 
 print("TfIdf matrix shape: {}".format(tfidf_matrix.shape))
 
-with open('../dataset/Out_p13_tfidf.p', 'wb') as f:
+with open('../dataset/Out_p22_tfidf.p', 'wb') as f:
 	p.dump(tfidf_matrix, f)
+	
+terms = tfidf_vectorizer.get_feature_names()
 
-print("TfIdf matrix saved!")
+with open('../dataset/Out_p22_tfvect_terms.p', 'wb') as f:
+    p.dump(terms,f)
+
+print("TfIdf matrix and terms saved!")
 
